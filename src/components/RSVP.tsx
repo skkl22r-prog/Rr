@@ -21,32 +21,22 @@ const RSVP = () => {
   const submit = async () => {
     if (!name.trim() || !choice) return;
     setState({ kind: "loading" });
-    // Generate a fresh device id for every submission so the same phone can register multiple times
     const deviceId = crypto.randomUUID();
-    const token = choice === "attending" ? crypto.randomUUID() : null;
 
-    const { data, error } = await supabase
-  .from("invites")
-  .insert({
-    name: name.trim(),
-    status: "attending", // نخليه ثابت للتجربة
-    device_id: deviceId,
-    qr_token: token ?? null,
-    used: false
-  });
-
-console.log("SUPABASE ERROR:", error);
-console.log("SUPABASE DATA:", data);
+    const { error } = await supabase.from("rsvps").insert({
+      name: name.trim(),
+      status: choice,
+      device_id: deviceId,
+    });
 
     if (error) {
       setState({ kind: "error", msg: "حدث خطأ، حاول مرة أخرى" });
       return;
     }
 
-    if (choice === "attending" && token) {
-      setState({ kind: "attending", name: name.trim(), token });
-      // Delay so user sees the QR before being redirected to WhatsApp
-      setTimeout(() => sendWhatsApp("attending", name.trim()), 8000);
+    if (choice === "attending") {
+      setState({ kind: "attending", name: name.trim() });
+      setTimeout(() => sendWhatsApp("attending", name.trim()), 3000);
     } else {
       setState({ kind: "declined", name: name.trim() });
       setTimeout(() => sendWhatsApp("declined", name.trim()), 4000);
@@ -75,43 +65,13 @@ console.log("SUPABASE DATA:", data);
             boxShadow: "var(--shadow-elegant), 0 0 40px hsl(42 80% 60% / 0.3)",
           }}
         >
-          <div className="font-arabic text-2xl text-primary mb-2" style={{ fontWeight: 700 }}>
-            تم تأكيد حضورك بنجاح 🌸
+          <div className="font-arabic text-2xl text-primary mb-4" style={{ fontWeight: 700 }}>
+            نسعد بحضورك 🌸
           </div>
-          <div className="font-arabic text-base text-primary mb-2">
+          <div className="font-arabic text-base text-primary mb-6">
             أهلاً وسهلاً، {state.name}
           </div>
-          <p className="font-arabic text-sm text-muted-foreground mb-6">
-            هذا الباركود الخاص بك — يُمسح مرة واحدة عند الدخول
-          </p>
-          <div
-            className="inline-block p-5 rounded-xl"
-            style={{
-              background: "white",
-              border: "2px solid hsl(42 75% 55%)",
-              boxShadow: "0 0 30px hsl(42 80% 60% / 0.4)",
-            }}
-          >
-            <QRCodeSVG
-              value={`${window.location.origin}/scan/${state.token}`}
-              size={200}
-              level="H"
-              fgColor="hsl(38, 65%, 30%)"
-              bgColor="white"
-            />
-          </div>
-          <div
-            className="mt-5 rounded-xl px-4 py-3 font-arabic text-sm"
-            style={{
-              background: "hsla(0, 70%, 55%, 0.1)",
-              border: "1.5px solid hsl(0 70% 55% / 0.6)",
-              color: "hsl(0 70% 35%)",
-              fontWeight: 600,
-            }}
-          >
-            ⚠️ يرجى حفظ الباركود لأنه مطلوب عند الدخول
-          </div>
-          <p className="font-arabic text-xs text-muted-foreground mt-3">
+          <p className="font-arabic text-sm text-muted-foreground">
             سيتم تحويلك إلى الواتساب خلال لحظات لإرسال التأكيد...
           </p>
         </div>
