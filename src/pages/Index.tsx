@@ -38,7 +38,7 @@ const Index = () => {
           <section className="min-h-screen flex items-center justify-center">
             <img
               src={invitationImg}
-              alt="دعوة زفاف راشد و سارة"
+              alt=" غيمة"
               className="w-screen h-auto max-w-none animate-fade-in"
               style={{ boxShadow: "var(--shadow-elegant)" }}
             />
