@@ -78,15 +78,12 @@ setState({ kind: "ok", name: data.name });
   }
 
  if (state.kind === "ok") {
-  return (
-<div className="min-h-screen flex justify-center bg-[#f5efe6]">
-      <img
-  src={scanSuccess}
-  className="w-screen h-screen object-contain"
-/>
-    </div>
-  );
-}
+    return (
+      <div className="min-h-screen w-full">
+        <img src={scanSuccess} className="w-full block" />
+      </div>
+    );
+  }
 
   if (state.kind === "already") {
   return (
