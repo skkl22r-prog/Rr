@@ -43,10 +43,10 @@ const RSVP = () => {
 
   if (choice === "attending") {
   setState({
-    kind: "qr",
-    name: name.trim(),
-    qr: qr_token,
-  });
+  kind: "qr",
+  name: name.trim(),
+  qr: `${window.location.origin}/checkin?token=${qr_token}`,
+});
   } else {
     setState({
       kind: "declined",
