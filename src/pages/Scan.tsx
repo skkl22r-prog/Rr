@@ -32,6 +32,9 @@ const Scan = () => {
       .select("name, scanned")
       .eq("qr_token", cleanToken)
       .maybeSingle();
+console.log("TOKEN:", cleanToken);
+console.log("DATA:", data);
+console.log("ERROR:", error);
 
     if (!isMounted) return;
 
@@ -45,7 +48,7 @@ if (data.scanned) {
   return;
 }
 
-// 👇 هنا أهم خطوة (تسجيل أنه انمسح)
+// تحديث scanned
 const { error: updateError } = await supabase
   .from("rsvps")
   .update({ scanned: true })
