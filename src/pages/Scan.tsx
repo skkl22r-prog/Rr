@@ -78,12 +78,47 @@ setState({ kind: "ok", name: data.name });
   }
 
   if (state.kind === "ok") {
-    return (
-      <div className="min-h-screen w-full">
-        <img src={scanSuccess} className="w-full block" />
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6] px-6">
+      <div className="w-full max-w-md">
+
+        {/* المربع الرئيسي */}
+        <div className="bg-[#f5efe6] border-2 border-yellow-600 rounded-2xl p-6 text-center shadow-lg">
+
+          <p className="text-yellow-800 text-2xl font-bold mb-3">
+            تم تأكيد حضورك بنجاح
+          </p>
+
+          <p className="text-yellow-900 text-base mb-6">
+            اهلاً وسهلاً : {state.name}
+          </p>
+
+          <p className="text-yellow-700 text-sm mb-4">
+            هذا الباركود الخاص بك - يُمسح مرة واحدة عند الدخول
+          </p>
+
+          {/* مربع الباركود */}
+          <div className="bg-white border-2 border-yellow-600 rounded-xl p-4 mb-5">
+            <div className="w-full flex items-center justify-center">
+              {/* مكان الباركود */}
+              <div className="w-40 h-40 border border-yellow-300 flex items-center justify-center text-xs text-gray-400">
+                QR CODE
+              </div>
+            </div>
+          </div>
+
+          {/* التحذير */}
+          <div className="border border-red-600 bg-red-100/40 rounded-xl p-3">
+            <p className="text-red-700 font-bold text-sm">
+              ⚠️ يرجى حفظ الباركود لأنه مطلوب عند الدخول
+            </p>
+          </div>
+
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   if (state.kind === "already") {
   return (
