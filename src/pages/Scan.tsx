@@ -44,14 +44,15 @@ useEffect(() => {
   })();
 }, [cleanToken]);
 
-const row = data;
+if (!data) {
+  setState({ kind: "not_found" });
+  return;
+}
 
 setState({
   kind: "ok",
-  name: row.name,
+  name: data.name,
 });
-    })();
-  }, [token]);
 
   if (state.kind === "loading") {
     return (
