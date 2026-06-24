@@ -11,35 +11,38 @@ type State =
   | { kind: "error" };
 
 const Scan = () => {
-const token = useParams().token;
-  const [state, setState] = useState<State>({ kind: "loading" });
+const { token } = useParams();
+const cleanToken = decodeURIComponent(token || "");
 
-  useEffect(() => {
-    if (!token) {
+useEffect(() => {
+  if (!cleanToken) {
+    setState({ kind: "not_found" });
+    return;
+  }
+
+  (async () => {
+    const { data, error } = await supabase
+      .from("rsvps")
+      .select("*")
+      .eq("qr_token", cleanToken)
+      .maybeSingle();
+
+    if (error) {
+      setState({ kind: "error" });
+      return;
+    }
+
+    if (!data) {
       setState({ kind: "not_found" });
       return;
     }
-    (async () => {
-const { data, error } = await supabase
-  .from("rsvps")
-  .select("*")
-  .eq("qr_token", token)
-  .maybeSingle();
 
-if (error) {
-  setState({ kind: "error" });
-  return;
-}
-
-if (!data) {
-  setState({ kind: "not_found" });
-  return;
-}
-
-setState({
-  kind: "ok",
-  name: data.name,
-});
+    setState({
+      kind: "ok",
+      name: data.name,
+    });
+  })();
+}, [cleanToken]);
 
 const row = data;
 
