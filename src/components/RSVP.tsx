@@ -47,7 +47,6 @@ const RSVP = () => {
     name: name.trim(),
     qr: qr_token,
   });
-}
   } else {
     setState({
       kind: "declined",
