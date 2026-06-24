@@ -25,11 +25,13 @@ const { data, error } = await supabase
   .select("*")
   .eq("qr_token", token)
   .single();
-      if (error || !data || data.length === 0) {
-        setState({ kind: "error" });
-        return;
-      }
-      const row = data;
+
+if (error || !data) {
+  setState({ kind: "not_found" });
+  return;
+}
+
+const row = data;
 
 setState({
   kind: "ok",
