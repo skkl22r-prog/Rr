@@ -86,12 +86,26 @@ setState({ kind: "ok", name: data.name });
   }
 
   if (state.kind === "already") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>تم مسحه مسبقًا: {state.name}</p>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6] px-6">
+      <div className="bg-white border-2 border-red-500 rounded-2xl p-8 text-center shadow-lg max-w-md w-full">
+
+        <div className="text-red-500 text-5xl mb-4">✕</div>
+
+        <p className="text-red-600 text-2xl font-bold mb-2">
+          تم مسح الباركود مسبقاً
+        </p>
+
+        {state.name && (
+          <p className="text-gray-700 text-base">
+            الاسم: {state.name}
+          </p>
+        )}
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   if (state.kind === "not_found") {
   return (
