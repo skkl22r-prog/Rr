@@ -98,9 +98,10 @@ setState({ kind: "ok", name: data.name });
 <div className="bg-white border-2 border-yellow-600 rounded-xl p-2 mb-4 inline-flex">
 <div className="flex justify-center">
               {/* مكان الباركود */}
-             <div className="w-40 h-40 border border-yellow-300 flex items-center justify-center text-xs text-gray-400">
-  QR CODE
-</div>
+             <img
+  src={scanSuccess}
+  className="w-40 h-40 object-contain mx-auto"
+/>
             </div>
           </div>
 
