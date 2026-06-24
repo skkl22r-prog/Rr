@@ -45,6 +45,7 @@ const RSVP = () => {
   setState({
   kind: "qr",
   name: name.trim(),
+qr: `${window.location.origin}/scan/${qr_token}`
 });
   } else {
     setState({
