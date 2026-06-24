@@ -15,25 +15,25 @@ const { token } = useParams();
 const cleanToken = decodeURIComponent(token || "");
 
 useEffect(() => {
-  if (!cleanToken) {
-    setState({ kind: "not_found" });
-    return;
-  }
-
-  (async () => {
-    const { data, error } = await supabase
-      .from("rsvps")
-      .select("*")
-      .eq("qr_token", cleanToken)
-      .maybeSingle();
-
-    if (error) {
-      setState({ kind: "error" });
+  const run = async () => {
+    if (!cleanToken) {
+      setState({ kind: "not_found" });
       return;
     }
 
-    if (!data) {
+    const { data, error } = await supabase
+      .from("rsvps")
+      .select("name, scanned")
+      .eq("qr_token", cleanToken)
+      .maybeSingle();
+
+    if (error || !data) {
       setState({ kind: "not_found" });
+      return;
+    }
+
+    if (data.scanned) {
+      setState({ kind: "already", name: data.name });
       return;
     }
 
@@ -41,18 +41,10 @@ useEffect(() => {
       kind: "ok",
       name: data.name,
     });
-  })();
+  };
+
+  run();
 }, [cleanToken]);
-
-if (!data) {
-  setState({ kind: "not_found" });
-  return;
-}
-
-setState({
-  kind: "ok",
-  name: data.name,
-});
 
   if (state.kind === "loading") {
     return (
