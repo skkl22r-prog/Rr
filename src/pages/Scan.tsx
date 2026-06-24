@@ -40,12 +40,23 @@ const Scan = () => {
       return;
     }
 
-    if (data.scanned) {
-      setState({ kind: "already", name: data.name });
-      return;
-    }
+if (data.scanned) {
+  setState({ kind: "already", name: data.name });
+  return;
+}
 
-    setState({ kind: "ok", name: data.name });
+// 👇 هنا أهم خطوة (تسجيل أنه انمسح)
+const { error: updateError } = await supabase
+  .from("rsvps")
+  .update({ scanned: true })
+  .eq("qr_token", cleanToken);
+
+if (updateError) {
+  setState({ kind: "error" });
+  return;
+}
+
+setState({ kind: "ok", name: data.name });
   };
 
   run();
