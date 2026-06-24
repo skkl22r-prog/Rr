@@ -13,8 +13,7 @@ type State =
   | { kind: "attending"; name: string }
   | { kind: "declined"; name: string }
   | { kind: "error"; msg: string }
-| { kind: "qr"; name: string; qr: string };
-
+  | { kind: "qr"; name: string; qr: string };
 const RSVP = () => {
   const [name, setName] = useState("");
   const [choice, setChoice] = useState<"attending" | "declined" | null>(null);
