@@ -20,9 +20,11 @@ const token = useParams().token;
       return;
     }
     (async () => {
-const { data, error } = await supabase.rpc("scan_rsvp", {
-  _token: token?.trim(),
-});
+const { data, error } = await supabase
+  .from("rsvps")
+  .select("*")
+  .eq("qr_token", token)
+  .single();
       if (error || !data || data.length === 0) {
         setState({ kind: "error" });
         return;
