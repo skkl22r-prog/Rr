@@ -79,7 +79,7 @@ setState({ kind: "ok", name: data.name });
 
  if (state.kind === "ok") {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6]">
+<div className="min-h-screen flex justify-center bg-[#f5efe6]">
       <img
   src={scanSuccess}
   className="w-screen h-screen object-contain"
