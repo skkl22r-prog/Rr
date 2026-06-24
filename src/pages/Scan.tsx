@@ -79,7 +79,7 @@ setState({ kind: "ok", name: data.name });
 
   if (state.kind === "ok") {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6] px-6">
+<div className="min-h-screen flex justify-center pt-10 bg-[#f5efe6] px-6">
       <div className="w-full max-w-md">
 
         {/* المربع الرئيسي */}
@@ -93,17 +93,14 @@ setState({ kind: "ok", name: data.name });
             اهلاً وسهلاً : {state.name}
           </p>
 
-          <p className="text-yellow-700 text-sm mb-4">
-            هذا الباركود الخاص بك - يُمسح مرة واحدة عند الدخول
-          </p>
 
           {/* مربع الباركود */}
-          <div className="bg-white border-2 border-yellow-600 rounded-xl p-4 mb-5">
-            <div className="w-full flex items-center justify-center">
+<div className="bg-white border-2 border-yellow-600 rounded-xl p-2 mb-4 inline-flex">
+<div className="flex justify-center">
               {/* مكان الباركود */}
-              <div className="w-40 h-40 border border-yellow-300 flex items-center justify-center text-xs text-gray-400">
-                QR CODE
-              </div>
+             <div className="w-40 h-40 border border-yellow-300 flex items-center justify-center text-xs text-gray-400">
+  QR CODE
+</div>
             </div>
           </div>
 
