@@ -23,11 +23,15 @@ const RSVP = () => {
     setState({ kind: "loading" });
     const deviceId = crypto.randomUUID();
 
-    const { error } = await supabase.from("rsvps").insert({
-      name: name.trim(),
-      status: choice,
-      device_id: deviceId,
-    });
+    const qr_token = crypto.randomUUID();
+
+const { error } = await supabase.from("rsvps").insert({
+  name: name.trim(),
+  status: choice,
+  device_id: deviceId,
+  qr_token: qr_token,
+  scanned: false,
+});
 
     if (error) {
       setState({ kind: "error", msg: "حدث خطأ، حاول مرة أخرى" });
