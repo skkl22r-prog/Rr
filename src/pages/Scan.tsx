@@ -79,11 +79,19 @@ const Scan = () => {
     );
   }
 
+  if (state.kind === "not_found") {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p>الباركود غير صالح</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6]">
+      <div className="bg-white border-2 border-red-500 rounded-2xl p-8 text-center max-w-md">
+        <div className="text-red-500 text-5xl mb-4">⛔</div>
+
+        <p className="text-red-600 text-2xl font-bold mb-2">
+          الباركود غير صالح
+        </p>
+      </div>
     </div>
   );
+}
 };
 
 export default Scan;
