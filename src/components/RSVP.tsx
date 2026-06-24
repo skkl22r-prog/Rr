@@ -42,10 +42,12 @@ const RSVP = () => {
 }
 
   if (choice === "attending") {
-    setState({
-      kind: "attending",
-      name: name.trim(),
-    });
+  setState({
+    kind: "qr",
+    name: name.trim(),
+    qr: qr_token,
+  });
+}
   } else {
     setState({
       kind: "declined",
