@@ -29,10 +29,12 @@ const { data, error } = await supabase
         setState({ kind: "error" });
         return;
       }
-      const row = data[0] as { result: string; guest_name: string };
-      if (row.result === "ok") setState({ kind: "ok", name: row.guest_name });
-      else if (row.result === "already") setState({ kind: "already", name: row.guest_name });
-      else setState({ kind: "not_found" });
+      const row = data;
+
+setState({
+  kind: "ok",
+  name: row.name,
+});
     })();
   }, [token]);
 
