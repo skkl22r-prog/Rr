@@ -81,10 +81,9 @@ setState({ kind: "ok", name: data.name });
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f5efe6]">
       <img
-        src={scanSuccess}
-        width={500}
-        height={500}
-      />
+  src={scanSuccess}
+  className="w-screen h-screen object-contain"
+/>
     </div>
   );
 }
