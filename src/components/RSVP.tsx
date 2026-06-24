@@ -130,7 +130,7 @@ if (state.kind === "qr") {
           تم تسجيلك يا {state.name} 🌸
         </div>
 
-        <QRCode value={state.qr} size={180} />
+<QRCodeCanvas value={state.qr} size={180} />
 
         <p className="mt-4 text-sm font-arabic">
           احفظ هذا الباركود للدخول
