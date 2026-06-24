@@ -77,46 +77,10 @@ setState({ kind: "ok", name: data.name });
     );
   }
 
-  if (state.kind === "ok") {
-  return (
-<div className="min-h-screen flex justify-center pt-10 bg-[#f5efe6] px-6">
-      <div className="w-full max-w-md">
-
-        {/* المربع الرئيسي */}
-        <div className="bg-[#f5efe6] border-2 border-yellow-600 rounded-2xl p-6 text-center shadow-lg">
-
-          <p className="text-yellow-800 text-2xl font-bold mb-3">
-            تم تأكيد حضورك بنجاح
-          </p>
-
-          <p className="text-yellow-900 text-base mb-6">
-            اهلاً وسهلاً : {state.name}
-          </p>
-
-
-          {/* مربع الباركود */}
-<div className="bg-white border-2 border-yellow-600 rounded-xl p-2 mb-4 inline-flex">
-<div className="flex justify-center">
-              {/* مكان الباركود */}
-             <img
+  <img
   src={scanSuccess}
   className="w-40 h-40 object-contain mx-auto"
 />
-            </div>
-          </div>
-
-          {/* التحذير */}
-          <div className="border border-red-600 bg-red-100/40 rounded-xl p-3">
-            <p className="text-red-700 font-bold text-sm">
-              ⚠️ يرجى حفظ الباركود لأنه مطلوب عند الدخول
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  );
-}
 
   if (state.kind === "already") {
   return (
