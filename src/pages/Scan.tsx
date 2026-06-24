@@ -11,7 +11,7 @@ type State =
   | { kind: "error" };
 
 const Scan = () => {
-  const { token } = useParams<{ token: string }>();
+const token = useParams().token;
   const [state, setState] = useState<State>({ kind: "loading" });
 
   useEffect(() => {
@@ -20,7 +20,9 @@ const Scan = () => {
       return;
     }
     (async () => {
-      const { data, error } = await supabase.rpc("scan_rsvp", { _token: token });
+const { data, error } = await supabase.rpc("scan_rsvp", {
+  _token: token?.trim(),
+});
       if (error || !data || data.length === 0) {
         setState({ kind: "error" });
         return;
