@@ -23,8 +23,7 @@ const RSVP = () => {
     if (!name.trim() || !choice) return;
     setState({ kind: "loading" });
     const deviceId = crypto.randomUUID();
-
-    const qr_token = crypto.randomUUID();
+const qr_token = crypto.randomUUID();
 
 const { error } = await supabase.from("rsvps").insert({
   name: name.trim(),
