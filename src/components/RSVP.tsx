@@ -126,19 +126,44 @@ qr: `${window.location.origin}/scan/${qr_token}`
   }
 if (state.kind === "qr") {
   return (
-    <Reveal>
-      <div className="mx-auto max-w-md rounded-2xl p-8 text-center">
-        <div className="font-arabic text-2xl mb-4">
-          تم تسجيلك يا {state.name} 🌸
+    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6] px-6">
+      <div className="w-full max-w-md">
+
+        {/* المربع الرئيسي */}
+        <div className="bg-[#f5efe6] border-2 border-[#b08d57] rounded-2xl p-6 text-center shadow-lg">
+
+          <div className="font-arabic text-2xl text-[#8b6b3d] font-bold mb-2">
+            تم تأكيد حضورك بنجاح
+          </div>
+
+          <div className="text-[#8b6b3d] text-base mb-6">
+            اهلاً وسهلاً : {state.name}
+          </div>
+
+          {/* مربع الباركود */}
+          <div className="bg-white border-2 border-[#b08d57] rounded-xl p-5 mb-5">
+            <div className="flex justify-center">
+              <div className="bg-white p-3 rounded-lg border border-[#e6d3b3]">
+                <QRCodeCanvas value={state.qr} size={180} />
+              </div>
+            </div>
+          </div>
+
+          {/* النص تحت الباركود */}
+          <div className="text-[#a07a45] text-sm mb-4">
+            هذا الباركود الخاص بك - يُمسح مرة واحدة عند الدخول
+          </div>
+
+          {/* التحذير */}
+          <div className="border border-red-600 bg-red-100/30 rounded-xl p-3">
+            <p className="text-red-700 font-bold text-sm">
+              ⚠️ يرجى حفظ الباركود لأنه مطلوب عند الدخول
+            </p>
+          </div>
+
         </div>
-
-<QRCodeCanvas value={state.qr} size={180} />
-
-        <p className="mt-4 text-sm font-arabic">
-          احفظ هذا الباركود للدخول
-        </p>
       </div>
-    </Reveal>
+    </div>
   );
 }
   // Form
