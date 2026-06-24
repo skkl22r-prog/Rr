@@ -126,10 +126,10 @@ qr: `${window.location.origin}/scan/${qr_token}`
   }
 if (state.kind === "qr") {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6">
+    <div className="min-h-screen flex justify-center px-6 pt-10">
       <div className="w-full max-w-md">
 
-        {/* المربع الرئيسي (نفس ستايل الكارد العام) */}
+        {/* المربع الرئيسي */}
         <div
           className="rounded-2xl p-6 text-center backdrop-blur-md"
           style={{
@@ -149,29 +149,20 @@ if (state.kind === "qr") {
             اهلاً وسهلاً : {state.name}
           </div>
 
-          {/* وصف الباركود */}
-          <div className="font-arabic text-sm text-muted-foreground mb-5">
-            هذا الباركود الخاص بك - يُمسح مرة واحدة عند الدخول
-          </div>
-
           {/* مربع الباركود */}
           <div
-            className="rounded-xl p-5 mb-5"
+            className="rounded-xl p-2 mb-4 inline-flex"
             style={{
               background: "#ffffff",
               border: "1.5px solid hsl(42 75% 55% / 0.4)",
             }}
           >
-            <div className="flex justify-center items-center">
-              <div
-                className="p-3 rounded-lg"
-                style={{
-                  color: "hsl(42 75% 45%)",
-                }}
-              >
-                <QRCodeCanvas value={state.qr} size={180} />
-              </div>
-            </div>
+            <QRCodeCanvas
+              value={state.qr}
+              size={170}
+              fgColor="hsl(42 75% 45%)"
+              bgColor="#ffffff"
+            />
           </div>
 
           {/* التحذير الأحمر */}
