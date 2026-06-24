@@ -1,4 +1,4 @@
-import { useState } from "react";
+صimport { useState } from "react";
 import { Check, X, Send, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Reveal from "./Reveal";
@@ -126,39 +126,70 @@ qr: `${window.location.origin}/scan/${qr_token}`
   }
 if (state.kind === "qr") {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6] px-6">
+    <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-md">
 
-        {/* المربع الرئيسي */}
-        <div className="bg-[#f5efe6] border-2 border-[#b08d57] rounded-2xl p-6 text-center shadow-lg">
+        {/* المربع الرئيسي (نفس ستايل الكارد العام) */}
+        <div
+          className="rounded-2xl p-6 text-center backdrop-blur-md"
+          style={{
+            background: "hsla(40, 50%, 95%, 0.55)",
+            border: "1.5px solid hsl(42 75% 55% / 0.4)",
+            boxShadow: "var(--shadow-soft)",
+          }}
+        >
 
-          <div className="font-arabic text-2xl text-[#8b6b3d] font-bold mb-2">
+          {/* العنوان */}
+          <div className="font-arabic text-3xl text-primary mb-2 font-bold">
             تم تأكيد حضورك بنجاح
           </div>
 
-          <div className="text-[#8b6b3d] text-base mb-6">
+          {/* الاسم */}
+          <div className="font-arabic text-base text-muted-foreground mb-4">
             اهلاً وسهلاً : {state.name}
           </div>
 
+          {/* وصف الباركود */}
+          <div className="font-arabic text-sm text-muted-foreground mb-5">
+            هذا الباركود الخاص بك - يُمسح مرة واحدة عند الدخول
+          </div>
+
           {/* مربع الباركود */}
-          <div className="bg-white border-2 border-[#b08d57] rounded-xl p-5 mb-5">
-            <div className="flex justify-center">
-              <div className="bg-white p-3 rounded-lg border border-[#e6d3b3]">
+          <div
+            className="rounded-xl p-5 mb-5"
+            style={{
+              background: "#ffffff",
+              border: "1.5px solid hsl(42 75% 55% / 0.4)",
+            }}
+          >
+            <div className="flex justify-center items-center">
+              <div
+                className="p-3 rounded-lg"
+                style={{
+                  color: "hsl(42 75% 45%)",
+                }}
+              >
                 <QRCodeCanvas value={state.qr} size={180} />
               </div>
             </div>
           </div>
 
-          {/* النص تحت الباركود */}
-          <div className="text-[#a07a45] text-sm mb-4">
-            هذا الباركود الخاص بك - يُمسح مرة واحدة عند الدخول
-          </div>
-
-          {/* التحذير */}
-          <div className="border border-red-600 bg-red-100/30 rounded-xl p-3">
+          {/* التحذير الأحمر */}
+          <div
+            className="rounded-xl p-3"
+            style={{
+              background: "rgba(239, 68, 68, 0.08)",
+              border: "1px solid rgba(220, 38, 38, 0.6)",
+            }}
+          >
             <p className="text-red-700 font-bold text-sm">
               ⚠️ يرجى حفظ الباركود لأنه مطلوب عند الدخول
             </p>
+          </div>
+
+          {/* الملاحظة الصغيرة */}
+          <div className="text-xs text-muted-foreground mt-2">
+            الرجاء عدم مسح الباركود
           </div>
 
         </div>
