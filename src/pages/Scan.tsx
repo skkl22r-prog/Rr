@@ -24,12 +24,22 @@ const { data, error } = await supabase
   .from("rsvps")
   .select("*")
   .eq("qr_token", token)
-  .single();
+  .maybeSingle();
 
-if (error || !data) {
+if (error) {
+  setState({ kind: "error" });
+  return;
+}
+
+if (!data) {
   setState({ kind: "not_found" });
   return;
 }
+
+setState({
+  kind: "ok",
+  name: data.name,
+});
 
 const row = data;
 
