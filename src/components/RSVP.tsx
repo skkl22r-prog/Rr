@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Check, X, Send, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Reveal from "./Reveal";
-import QRCode from "qrcode.react";
+import { QRCodeCanvas } from "qrcode.react";
 
 // 👈 عدّل رقم الواتساب هنا (بصيغة دولية بدون + أو 00). مثال السعودية: 9665XXXXXXXX
 const HOST_WHATSAPP = "99554129943";
