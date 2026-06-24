@@ -20,42 +20,38 @@ const RSVP = () => {
   const [state, setState] = useState<State>({ kind: "form" });
 
   const submit = async () => {
-    if (!name.trim() || !choice) return;
-    setState({ kind: "loading" });
-    const deviceId = crypto.randomUUID();
-const qr_token = crypto.randomUUID();
+  if (!name.trim() || !choice) return;
 
-const { error } = await supabase.from("rsvps").insert({
-  name: name.trim(),
-  status: choice,
-  device_id: deviceId,
-  qr_token: qr_token,
-  scanned: false,
-});
+  setState({ kind: "loading" });
 
-    if (error) {
-  setState({ kind: "error", msg: "حدث خطأ، حاول مرة أخرى" });
-  return;
-}
+  const deviceId = crypto.randomUUID();
+  const qr_token = crypto.randomUUID();
 
-const qr_token = crypto.randomUUID();
-
-await supabase.from("rsvps").update({
-  qr_token: qr_token,
-  scanned: false,
-}).eq("device_id", deviceId);
-
-if (choice === "attending") {
-  setState({
-    kind: "attending",
+  const { error } = await supabase.from("rsvps").insert({
     name: name.trim(),
+    status: choice,
+    device_id: deviceId,
+    qr_token: qr_token,
+    scanned: false,
   });
-} else {
-  setState({
-    kind: "declined",
-    name: name.trim(),
-  });
-}
+
+  if (error) {
+    setState({ kind: "error", msg: "حدث خطأ، حاول مرة أخرى" });
+    return;
+  }
+
+  if (choice === "attending") {
+    setState({
+      kind: "attending",
+      name: name.trim(),
+    });
+  } else {
+    setState({
+      kind: "declined",
+      name: name.trim(),
+    });
+  }
+};
 
   const sendWhatsApp = (status: "attending" | "declined", guestName: string) => {
     const text =
