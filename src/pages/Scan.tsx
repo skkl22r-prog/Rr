@@ -17,33 +17,43 @@ const Scan = () => {
   const [state, setState] = useState<State>({ kind: "loading" });
 
   useEffect(() => {
-    const run = async () => {
-      if (!cleanToken) {
-        setState({ kind: "not_found" });
-        return;
-      }
+  let isMounted = true;
 
-      const { data, error } = await supabase
-        .from("rsvps")
-        .select("name, scanned")
-        .eq("qr_token", cleanToken)
-        .maybeSingle();
+  const run = async () => {
+    if (!cleanToken) {
+      if (isMounted) setState({ kind: "not_found" });
+      return;
+    }
 
-      if (error || !data) {
-        setState({ kind: "not_found" });
-        return;
-      }
+    if (isMounted) setState({ kind: "loading" });
 
-      if (data.scanned) {
-        setState({ kind: "already", name: data.name });
-        return;
-      }
+    const { data, error } = await supabase
+      .from("rsvps")
+      .select("name, scanned")
+      .eq("qr_token", cleanToken)
+      .maybeSingle();
 
-      setState({ kind: "ok", name: data.name });
-    };
+    if (!isMounted) return;
 
-    run();
-  }, [cleanToken]);
+    if (error || !data) {
+      setState({ kind: "not_found" });
+      return;
+    }
+
+    if (data.scanned) {
+      setState({ kind: "already", name: data.name });
+      return;
+    }
+
+    setState({ kind: "ok", name: data.name });
+  };
+
+  run();
+
+  return () => {
+    isMounted = false;
+  };
+}, [cleanToken]);
 
   if (state.kind === "loading") {
     return (
