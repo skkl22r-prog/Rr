@@ -126,61 +126,39 @@ qr: `${window.location.origin}/scan/${qr_token}`
   }
 if (state.kind === "qr") {
   return (
-    <div className="min-h-screen flex justify-center px-6 pt-10">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5efe6] px-6">
       <div className="w-full max-w-md">
 
-        {/* المربع الرئيسي */}
-        <div
-          className="rounded-2xl p-6 text-center backdrop-blur-md"
-          style={{
-            background: "hsla(40, 50%, 95%, 0.55)",
-            border: "1.5px solid hsl(42 75% 55% / 0.4)",
-            boxShadow: "var(--shadow-soft)",
-          }}
-        >
+        {/* الكارد الرئيسي */}
+        <div className="bg-[#f5efe6] border-2 border-yellow-600 rounded-2xl p-6 text-center shadow-lg">
 
           {/* العنوان */}
-          <div className="font-arabic text-3xl text-primary mb-2 font-bold">
+          <div className="text-yellow-800 text-2xl font-bold mb-3">
             تم تأكيد حضورك بنجاح
           </div>
 
           {/* الاسم */}
-          <div className="font-arabic text-base text-muted-foreground mb-4">
+          <div className="text-yellow-900 text-base mb-6">
             اهلاً وسهلاً : {state.name}
           </div>
 
-          {/* مربع الباركود */}
-          <div
-            className="rounded-xl p-2 mb-4 inline-flex"
-            style={{
-              background: "#ffffff",
-              border: "1.5px solid hsl(42 75% 55% / 0.4)",
-            }}
-          >
-            <QRCodeCanvas
-              value={state.qr}
-              size={170}
-              fgColor="hsl(42 75% 45%)"
-              bgColor="#ffffff"
-            />
+          {/* مربع QR */}
+          <div className="bg-white border-2 border-yellow-600 rounded-xl p-4 mb-5">
+            <div className="flex justify-center">
+              <QRCodeCanvas
+                value={state.qr}
+                size={180}
+                fgColor="hsl(30 40% 18%)"
+                bgColor="#ffffff"
+              />
+            </div>
           </div>
 
-          {/* التحذير الأحمر */}
-          <div
-            className="rounded-xl p-3"
-            style={{
-              background: "rgba(239, 68, 68, 0.08)",
-              border: "1px solid rgba(220, 38, 38, 0.6)",
-            }}
-          >
+          {/* التحذير */}
+          <div className="border border-red-600 bg-red-100/40 rounded-xl p-3">
             <p className="text-red-700 font-bold text-sm">
               ⚠️ يرجى حفظ الباركود لأنه مطلوب عند الدخول
             </p>
-          </div>
-
-          {/* الملاحظة الصغيرة */}
-          <div className="text-xs text-muted-foreground mt-2">
-            الرجاء عدم مسح الباركود
           </div>
 
         </div>
