@@ -159,12 +159,10 @@ if (state.kind === "qr") {
               border: "1.5px solid hsl(42 75% 55% / 0.4)",
             }}
           >
-            <QRCodeCanvas
-              value={state.qr}
-              size={170}
-              fgColor="hsl(42 75% 45%)"
-              bgColor="#ffffff"
-            />
+           <img
+  src={scanSuccess}
+  className="w-40 mx-auto"
+/>
           </div>
 
           {/* التحذير الأحمر */}
