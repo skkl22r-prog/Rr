@@ -36,9 +36,10 @@ const RSVP = () => {
   });
 
   if (error) {
-    setState({ kind: "error", msg: "حدث خطأ، حاول مرة أخرى" });
-    return;
-  }
+  console.log("SUPABASE ERROR:", error);
+  setState({ kind: "error", msg: "حدث خطأ، حاول مرة أخرى" });
+  return;
+}
 
   if (choice === "attending") {
     setState({
