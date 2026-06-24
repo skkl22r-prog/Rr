@@ -11,45 +11,44 @@ type State =
   | { kind: "error" };
 
 const Scan = () => {
-const { token } = useParams();
-const cleanToken = decodeURIComponent(token || "");
+  const { token } = useParams<{ token: string }>();
+  const cleanToken = decodeURIComponent(token || "");
 
-useEffect(() => {
-  const run = async () => {
-    if (!cleanToken) {
-      setState({ kind: "not_found" });
-      return;
-    }
+  const [state, setState] = useState<State>({ kind: "loading" });
 
-    const { data, error } = await supabase
-      .from("rsvps")
-      .select("name, scanned")
-      .eq("qr_token", cleanToken)
-      .maybeSingle();
+  useEffect(() => {
+    const run = async () => {
+      if (!cleanToken) {
+        setState({ kind: "not_found" });
+        return;
+      }
 
-    if (error || !data) {
-      setState({ kind: "not_found" });
-      return;
-    }
+      const { data, error } = await supabase
+        .from("rsvps")
+        .select("name, scanned")
+        .eq("qr_token", cleanToken)
+        .maybeSingle();
 
-    if (data.scanned) {
-      setState({ kind: "already", name: data.name });
-      return;
-    }
+      if (error || !data) {
+        setState({ kind: "not_found" });
+        return;
+      }
 
-    setState({
-      kind: "ok",
-      name: data.name,
-    });
-  };
+      if (data.scanned) {
+        setState({ kind: "already", name: data.name });
+        return;
+      }
 
-  run();
-}, [cleanToken]);
+      setState({ kind: "ok", name: data.name });
+    };
+
+    run();
+  }, [cleanToken]);
 
   if (state.kind === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "hsl(40 50% 92%)" }}>
-        <p className="font-arabic text-lg" style={{ color: "hsl(38 65% 30%)" }}>جارٍ التحقق...</p>
+      <div className="min-h-screen flex items-center justify-center bg-muted">
+        <p>جارٍ التحقق...</p>
       </div>
     );
   }
@@ -57,46 +56,22 @@ useEffect(() => {
   if (state.kind === "ok") {
     return (
       <div className="min-h-screen w-full">
-        <img src={scanSuccess} alt="تم تأكيد حضورك" className="w-full h-auto block" />
+        <img src={scanSuccess} className="w-full block" />
       </div>
     );
   }
 
   if (state.kind === "already") {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "hsl(40 50% 92%)" }}>
-        <div
-          className="max-w-md w-full text-center rounded-2xl p-8"
-          style={{
-            background: "white",
-            border: "2px solid hsl(0 70% 55%)",
-            boxShadow: "0 10px 40px hsla(0,0%,0%,0.15)",
-          }}
-        >
-          <div
-            className="mx-auto w-20 h-20 rounded-full flex items-center justify-center mb-5"
-            style={{ background: "hsl(0 70% 55%)", color: "white", fontSize: 42 }}
-          >
-            ✕
-          </div>
-          <p className="font-arabic text-2xl mb-2" style={{ color: "hsl(0 70% 40%)", fontWeight: 700 }}>
-            تم مسح الباركود مسبقاً
-          </p>
-          {state.name && (
-            <p className="font-arabic text-base" style={{ color: "hsl(30 30% 30%)" }}>
-              الاسم: {state.name}
-            </p>
-          )}
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <p>تم مسحه مسبقًا: {state.name}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "hsl(40 50% 92%)" }}>
-      <p className="font-arabic text-lg" style={{ color: "hsl(0 70% 40%)" }}>
-        الباركود غير صالح
-      </p>
+    <div className="min-h-screen flex items-center justify-center">
+      <p>الباركود غير صالح</p>
     </div>
   );
 };
