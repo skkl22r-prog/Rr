@@ -24,8 +24,30 @@ const RSVP = () => {
 
   setState({ kind: "loading" });
 
-  const deviceId = crypto.randomUUID();
-  const qr_token = crypto.randomUUID();
+  let deviceId = localStorage.getItem("device_id");
+
+if (!deviceId) {
+  deviceId = crypto.randomUUID();
+  localStorage.setItem("device_id", deviceId);
+}
+
+const qr_token = crypto.randomUUID();
+
+const { data: existing } = await supabase
+  .from("rsvps")
+  .select("id")
+  .eq("device_id", deviceId)
+  .maybeSingle();
+
+if (existing) {
+  setState({
+    kind: "error",
+    msg: "تم التسجيل مسبقاً من هذا الجهاز",
+  });
+  return;
+}
+
+const { error } = await supabase.from("rsvps").insert({
 
   const { error } = await supabase.from("rsvps").insert({
     name: name.trim(),
