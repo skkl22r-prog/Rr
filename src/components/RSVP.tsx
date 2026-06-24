@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Check, X, Send, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Reveal from "./Reveal";
+import QRCode from "qrcode.react";
 
 // 👈 عدّل رقم الواتساب هنا (بصيغة دولية بدون + أو 00). مثال السعودية: 9665XXXXXXXX
 const HOST_WHATSAPP = "99554129943";
@@ -122,7 +123,23 @@ const RSVP = () => {
       </Reveal>
     );
   }
+if (state.kind === "qr") {
+  return (
+    <Reveal>
+      <div className="mx-auto max-w-md rounded-2xl p-8 text-center">
+        <div className="font-arabic text-2xl mb-4">
+          تم تسجيلك يا {state.name} 🌸
+        </div>
 
+        <QRCode value={state.qr} size={180} />
+
+        <p className="mt-4 text-sm font-arabic">
+          احفظ هذا الباركود للدخول
+        </p>
+      </div>
+    </Reveal>
+  );
+}
   // Form
   return (
     <Reveal>
