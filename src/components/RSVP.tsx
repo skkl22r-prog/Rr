@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Check, X, Send, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Reveal from "./Reveal";
@@ -18,6 +18,19 @@ const RSVP = () => {
   const [name, setName] = useState("");
   const [choice, setChoice] = useState<"attending" | "declined" | null>(null);
   const [state, setState] = useState<State>({ kind: "form" });
+useEffect(() => {
+  const saved = localStorage.getItem("guest_qr");
+
+  if (!saved) return;
+
+  const data = JSON.parse(saved);
+
+  setState({
+    kind: "qr",
+    name: data.name,
+    qr: data.qr,
+  });
+}, []);
 
   const submit = async () => {
   if (!name.trim() || !choice) return;
@@ -62,12 +75,22 @@ if (existing) {
 }
 
   if (choice === "attending") {
+  const qrUrl = `${window.location.origin}/scan/${qr_token}`;
+
+  localStorage.setItem(
+    "guest_qr",
+    JSON.stringify({
+      name: name.trim(),
+      qr: qrUrl,
+    })
+  );
+
   setState({
-  kind: "qr",
-  name: name.trim(),
-qr: `${window.location.origin}/scan/${qr_token}`
-});
-  } else {
+    kind: "qr",
+    name: name.trim(),
+    qr: qrUrl,
+  });
+} else {
     setState({
       kind: "declined",
       name: name.trim(),
