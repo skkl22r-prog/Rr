@@ -169,7 +169,7 @@ if (existing) {
   }
 if (state.kind === "qr") {
   return (
-    <div className="min-h-screen flex justify-center px-6 pt-10">
+<div className="flex justify-center px-6 pt-10">
       <div className="w-full max-w-md">
 
         {/* المربع الرئيسي */}
